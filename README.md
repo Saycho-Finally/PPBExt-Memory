@@ -4,6 +4,8 @@
 落证据链——并在偏好演化场景里实测了三种失效策略的**三角张力**（回答质量 / 追问可答 /
 缓存代价），**折叠 + LLM 语义判定是唯一在三个维度都不差的方案**（回答正确率 1.00 实测）。
 
+> 作者：Saycho-Finally（独立研究者） ｜ AI 使用声明见 [AI_DISCLOSURE.md](AI_DISCLOSURE.md) ｜ License: MIT ｜ 核心零依赖 ｜ Python ≥3.10（依赖 DecisionCore 时自动启用审计）
+
 > License: MIT ｜ 核心零依赖 ｜ Python ≥3.10 ｜ 依赖 DecisionCore 时自动启用审计（可选）
 
 ---
