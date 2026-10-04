@@ -1,0 +1,2 @@
+# 核心零依赖；实验需要（DeepSeek API）：
+requests>=2.28

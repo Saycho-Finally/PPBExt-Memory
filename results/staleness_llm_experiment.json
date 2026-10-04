@@ -1,0 +1,530 @@
+{
+  "results": [
+    {
+      "strategy": "naive",
+      "answer_accuracy": 0.75,
+      "evolution_answerable": 1.0,
+      "avg_prefix_overlap": 0.676,
+      "final_active": 12,
+      "fold_pages": 0,
+      "audited": 0
+    },
+    {
+      "strategy": "delete",
+      "answer_accuracy": 0.917,
+      "evolution_answerable": 0.111,
+      "avg_prefix_overlap": 0.627,
+      "final_active": 4,
+      "fold_pages": 0,
+      "audited": 0
+    },
+    {
+      "strategy": "fold_char",
+      "answer_accuracy": 0.5,
+      "evolution_answerable": 1.0,
+      "avg_prefix_overlap": 0.754,
+      "final_active": 11,
+      "fold_pages": 0,
+      "audited": 12
+    },
+    {
+      "strategy": "fold_llm",
+      "answer_accuracy": 1.0,
+      "evolution_answerable": 0.667,
+      "avg_prefix_overlap": 0.733,
+      "final_active": 7,
+      "fold_pages": 4,
+      "audited": 12
+    }
+  ],
+  "detail": {
+    "naive": [
+      {
+        "turn": 1,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": null,
+        "n_active": 1,
+        "fold_pages": 0
+      },
+      {
+        "turn": 2,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": 1.0,
+        "n_active": 2,
+        "fold_pages": 0
+      },
+      {
+        "turn": 3,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": 0.4838709677419355,
+        "n_active": 3,
+        "fold_pages": 0
+      },
+      {
+        "turn": 4,
+        "cur": "Svelte",
+        "ans": "React",
+        "correct": false,
+        "evo_ok": true,
+        "prefix_overlap": 0.58,
+        "n_active": 4,
+        "fold_pages": 0
+      },
+      {
+        "turn": 5,
+        "cur": "Svelte",
+        "ans": "React",
+        "correct": false,
+        "evo_ok": true,
+        "prefix_overlap": 1.0,
+        "n_active": 5,
+        "fold_pages": 0
+      },
+      {
+        "turn": 6,
+        "cur": "Svelte",
+        "ans": "Svelte",
+        "correct": true,
+        "evo_ok": true,
+        "prefix_overlap": 0.13157894736842105,
+        "n_active": 6,
+        "fold_pages": 0
+      },
+      {
+        "turn": 7,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": true,
+        "prefix_overlap": 0.4891304347826087,
+        "n_active": 7,
+        "fold_pages": 0
+      },
+      {
+        "turn": 8,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": true,
+        "prefix_overlap": 1.0,
+        "n_active": 8,
+        "fold_pages": 0
+      },
+      {
+        "turn": 9,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": true,
+        "prefix_overlap": 0.8577586206896551,
+        "n_active": 9,
+        "fold_pages": 0
+      },
+      {
+        "turn": 10,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": true,
+        "prefix_overlap": 1.0,
+        "n_active": 10,
+        "fold_pages": 0
+      },
+      {
+        "turn": 11,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": true,
+        "prefix_overlap": 0.4206896551724138,
+        "n_active": 11,
+        "fold_pages": 0
+      },
+      {
+        "turn": 12,
+        "cur": "React",
+        "ans": "Svelte",
+        "correct": false,
+        "evo_ok": true,
+        "prefix_overlap": 0.47335423197492166,
+        "n_active": 12,
+        "fold_pages": 0
+      }
+    ],
+    "delete": [
+      {
+        "turn": 1,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": null,
+        "n_active": 1,
+        "fold_pages": 0
+      },
+      {
+        "turn": 2,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": 1.0,
+        "n_active": 1,
+        "fold_pages": 0
+      },
+      {
+        "turn": 3,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": 0.9090909090909091,
+        "n_active": 1,
+        "fold_pages": 0
+      },
+      {
+        "turn": 4,
+        "cur": "Svelte",
+        "ans": "Svelte",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": 0.5714285714285714,
+        "n_active": 1,
+        "fold_pages": 0
+      },
+      {
+        "turn": 5,
+        "cur": "Svelte",
+        "ans": "Svelte",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": 1.0,
+        "n_active": 2,
+        "fold_pages": 0
+      },
+      {
+        "turn": 6,
+        "cur": "Svelte",
+        "ans": "Svelte",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": 0.35714285714285715,
+        "n_active": 2,
+        "fold_pages": 0
+      },
+      {
+        "turn": 7,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": 0.3508771929824561,
+        "n_active": 2,
+        "fold_pages": 0
+      },
+      {
+        "turn": 8,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": 1.0,
+        "n_active": 3,
+        "fold_pages": 0
+      },
+      {
+        "turn": 9,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": 0.273972602739726,
+        "n_active": 3,
+        "fold_pages": 0
+      },
+      {
+        "turn": 10,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": 1.0,
+        "n_active": 4,
+        "fold_pages": 0
+      },
+      {
+        "turn": 11,
+        "cur": "React",
+        "ans": "Vue",
+        "correct": false,
+        "evo_ok": false,
+        "prefix_overlap": 0.21505376344086022,
+        "n_active": 4,
+        "fold_pages": 0
+      },
+      {
+        "turn": 12,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": true,
+        "prefix_overlap": 0.21505376344086022,
+        "n_active": 4,
+        "fold_pages": 0
+      }
+    ],
+    "fold_char": [
+      {
+        "turn": 1,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": null,
+        "n_active": 1,
+        "fold_pages": 0
+      },
+      {
+        "turn": 2,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": 1.0,
+        "n_active": 1,
+        "fold_pages": 0
+      },
+      {
+        "turn": 3,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": 0.9090909090909091,
+        "n_active": 2,
+        "fold_pages": 0
+      },
+      {
+        "turn": 4,
+        "cur": "Svelte",
+        "ans": "React",
+        "correct": false,
+        "evo_ok": true,
+        "prefix_overlap": 0.8169014084507042,
+        "n_active": 3,
+        "fold_pages": 0
+      },
+      {
+        "turn": 5,
+        "cur": "Svelte",
+        "ans": "React",
+        "correct": false,
+        "evo_ok": true,
+        "prefix_overlap": 1.0,
+        "n_active": 4,
+        "fold_pages": 0
+      },
+      {
+        "turn": 6,
+        "cur": "Svelte",
+        "ans": "Svelte",
+        "correct": true,
+        "evo_ok": true,
+        "prefix_overlap": 0.16260162601626016,
+        "n_active": 5,
+        "fold_pages": 0
+      },
+      {
+        "turn": 7,
+        "cur": "React",
+        "ans": "Svelte",
+        "correct": false,
+        "evo_ok": true,
+        "prefix_overlap": 0.5806451612903226,
+        "n_active": 6,
+        "fold_pages": 0
+      },
+      {
+        "turn": 8,
+        "cur": "React",
+        "ans": "Svelte",
+        "correct": false,
+        "evo_ok": true,
+        "prefix_overlap": 1.0,
+        "n_active": 7,
+        "fold_pages": 0
+      },
+      {
+        "turn": 9,
+        "cur": "React",
+        "ans": "Svelte",
+        "correct": false,
+        "evo_ok": true,
+        "prefix_overlap": 0.8374384236453202,
+        "n_active": 8,
+        "fold_pages": 0
+      },
+      {
+        "turn": 10,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": true,
+        "prefix_overlap": 1.0,
+        "n_active": 9,
+        "fold_pages": 0
+      },
+      {
+        "turn": 11,
+        "cur": "React",
+        "ans": "Svelte",
+        "correct": false,
+        "evo_ok": true,
+        "prefix_overlap": 0.4674329501915709,
+        "n_active": 10,
+        "fold_pages": 0
+      },
+      {
+        "turn": 12,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": true,
+        "prefix_overlap": 0.5206896551724138,
+        "n_active": 11,
+        "fold_pages": 0
+      }
+    ],
+    "fold_llm": [
+      {
+        "turn": 1,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": null,
+        "n_active": 1,
+        "fold_pages": 0
+      },
+      {
+        "turn": 2,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": 1.0,
+        "n_active": 1,
+        "fold_pages": 0
+      },
+      {
+        "turn": 3,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": 0.9090909090909091,
+        "n_active": 1,
+        "fold_pages": 1
+      },
+      {
+        "turn": 4,
+        "cur": "Svelte",
+        "ans": "Svelte",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": 0.5714285714285714,
+        "n_active": 1,
+        "fold_pages": 2
+      },
+      {
+        "turn": 5,
+        "cur": "Svelte",
+        "ans": "Svelte",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": 1.0,
+        "n_active": 2,
+        "fold_pages": 2
+      },
+      {
+        "turn": 6,
+        "cur": "Svelte",
+        "ans": "Svelte",
+        "correct": true,
+        "evo_ok": false,
+        "prefix_overlap": 0.35714285714285715,
+        "n_active": 3,
+        "fold_pages": 2
+      },
+      {
+        "turn": 7,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": true,
+        "prefix_overlap": 0.5909090909090909,
+        "n_active": 3,
+        "fold_pages": 3
+      },
+      {
+        "turn": 8,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": true,
+        "prefix_overlap": 1.0,
+        "n_active": 4,
+        "fold_pages": 3
+      },
+      {
+        "turn": 9,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": true,
+        "prefix_overlap": 0.6857142857142857,
+        "n_active": 5,
+        "fold_pages": 3
+      },
+      {
+        "turn": 10,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": true,
+        "prefix_overlap": 1.0,
+        "n_active": 6,
+        "fold_pages": 3
+      },
+      {
+        "turn": 11,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": true,
+        "prefix_overlap": 0.5153374233128835,
+        "n_active": 7,
+        "fold_pages": 3
+      },
+      {
+        "turn": 12,
+        "cur": "React",
+        "ans": "React",
+        "correct": true,
+        "evo_ok": true,
+        "prefix_overlap": 0.4375,
+        "n_active": 7,
+        "fold_pages": 4
+      }
+    ]
+  }
+}
