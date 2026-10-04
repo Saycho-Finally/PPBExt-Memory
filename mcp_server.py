@@ -64,6 +64,30 @@ TOOLS = [
             "required": ["page_id", "reason"],
         },
     },
+    {
+        "name": "memory_list",
+        "description": "列出全部记忆（用户可见视图：kind/内容/lifecycle/时间/来源），"
+                       "供用户审阅与治理",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "include_folded": {"type": "boolean", "default": False},
+            },
+        },
+    },
+    {
+        "name": "memory_delete",
+        "description": "用户删除一条记忆（隐私优先：内容物理删除，仅保留不含内容的"
+                       "删除事件以供审计）",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "page_id": {"type": "string"},
+                "reason": {"type": "string", "default": "user_requested"},
+            },
+            "required": ["page_id"],
+        },
+    },
 ]
 
 
@@ -81,6 +105,22 @@ def _call_tool(name: str, args: dict) -> dict:
     if name == "memory_fold":
         act = CTL.fold(args["page_id"], reason=args["reason"])
         return {"op": act.op, "page_id": act.page_id}
+    if name == "memory_list":
+        include_folded = bool(args.get("include_folded", False))
+        rows = []
+        for pg in STORE.pages:
+            if pg.supersedes and not include_folded:
+                continue
+            if pg.lifecycle == "folded" and not include_folded:
+                continue
+            rows.append({"page_id": pg.page_id, "kind": pg.kind,
+                         "content": pg.content[:120], "lifecycle": pg.lifecycle,
+                         "provenance": pg.provenance,
+                         "created_at": pg.created_at})
+        return {"n": len(rows), "pages": rows}
+    if name == "memory_delete":
+        out = STORE.purge(args["page_id"], reason=args.get("reason", "user_requested"))
+        return out
     raise ValueError(f"unknown tool: {name}")
 
 

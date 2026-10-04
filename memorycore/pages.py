@@ -89,6 +89,23 @@ class MemoryStore:
             out = [p for p in out if p.kind == kind]
         return out
 
+
+    def purge(self, page_id: str, reason: str = "user_requested") -> dict:
+        """用户删除（隐私优先）：物理移除页内容，保留不含内容的删除事件。
+        —— append-only 的纪律边界：内容可被用户删除（隐私权），事件永久留存（审计）。"""
+        target = next((p for p in self.pages if p.page_id == page_id), None)
+        if target is None:
+            return {"purged": False, "reason": "page not found"}
+        content_hash = hashlib.sha256(target.content.encode("utf-8")).hexdigest()[:12]
+        self.pages = [p for p in self.pages if p.page_id != page_id]
+        event = MemoryPage(
+            kind=PageKind.DECISION.value,
+            content=f"[PURGE] {page_id} content_hash={content_hash} reason={reason}",
+            supersedes=page_id, provenance="user_control")
+        self.add(event)
+        return {"purged": True, "page_id": page_id,
+                "content_hash": content_hash, "event_page": event.page_id}
+
     def fold_chain(self, page_id: str) -> list[str]:
         """追一条页的折叠链（它取代了谁、又被谁取代）。"""
         chain = [page_id]
