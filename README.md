@@ -57,6 +57,19 @@ EXPERIMENT_REPORT.md  完整实验报告（离线 + LLM 侧）
 - **记忆维护 × 决策审计**（折叠/更新决策经 DecisionCore 落 DecisionRecord：谁、何时、
   依据什么改了记忆）
 
+## MCP server（可选形态）
+
+本外挂同时提供 **MCP（Model Context Protocol）server** 形态——任何支持 MCP 的 agent
+客户端可直接把记忆作为工具调用：
+
+```bash
+python mcp_server.py        # stdio JSON-RPC
+```
+
+暴露三个工具：`memory_ingest`（写入/更新，自动 ADD/UPDATE/NOOP）、`memory_recall`
+（组装有效记忆 + 前缀稳定性指标）、`memory_fold`（折叠失效，审计链保留）。
+零依赖实现（纯 stdio JSON-RPC），冒烟测试随仓库（initialize / tools/list / tools/call）。
+
 ## 快速上手
 
 ```python
