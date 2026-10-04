@@ -6,8 +6,6 @@
 
 > 作者：Saycho-Finally（独立研究者） ｜ AI 使用声明见 [AI_DISCLOSURE.md](AI_DISCLOSURE.md) ｜ License: MIT ｜ 核心零依赖 ｜ Python ≥3.10（依赖 DecisionCore 时自动启用审计）
 
-> License: MIT ｜ 核心零依赖 ｜ Python ≥3.10 ｜ 依赖 DecisionCore 时自动启用审计（可选）
-
 ---
 
 ## 三条设计约束（从实测批判继承）
