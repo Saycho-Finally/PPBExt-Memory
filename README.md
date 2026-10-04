@@ -44,7 +44,7 @@ experiments/   staleness 实验（离线四策略 + LLM 侧三维验证）
 results/       实验原始数据（两份 JSON）
 tests/         16 项测试全过
 SPEC.md        立项分析与设计（含领域查新与差异化定位）
-EXPERIMENT_REPORT.md  完整实验报告（离线 + LLM 侧）
+reports/实验报告_staleness折叠三维对照_2026-10-04.md  完整实验报告（离线 + LLM 侧）
 ```
 
 ## 差异化定位（与已有方案的关系）
@@ -97,7 +97,7 @@ print(r.text, r.prefix_overlap, r.stable)          # 组装 + 前缀稳定性自
 - MemGPT / Letta（三层记忆 + 显式操作）、Mem0（事实抽取）、Zep（双时态图）、
   LangMem（后台抽取）、Stanford ACE（增量 playbook）、AgeMem（记忆操作工具化）
 - LoCoMo / LongMemEval / BEAM（记忆评测基准）
-- 本仓库的实验设计与数据：见 EXPERIMENT_REPORT.md
+- 本仓库的实验设计与数据：见 reports/实验报告_staleness折叠三维对照_2026-10-04.md
 
 ---
 
