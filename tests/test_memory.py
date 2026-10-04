@@ -23,7 +23,7 @@ def test_pages():
     print("页与页库（append-only）")
     store = MemoryStore()
     p1 = store.add(MemoryPage(kind=PageKind.PREFERENCE.value, content="偏好中文回复"))
-    store.add(MemoryPage(kind=PageKind.FACT.value, content="项目叫 Addenda"))
+    store.add(MemoryPage(kind=PageKind.FACT.value, content="项目叫 PPB"))
     check("页 id 确定性", p1.page_id == MemoryPage(
         kind=PageKind.PREFERENCE.value, content="偏好中文回复").finalize().page_id)
     check("重复内容同 id", store.add(MemoryPage(
