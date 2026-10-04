@@ -179,7 +179,7 @@ def main() -> None:
         print(f"{r['strategy']:8s} {r['cur_visible_rate']:>8.2f} "
               f"{r['conflict_turns']:>6d} {r['avg_prefix_overlap']:>8.2f} "
               f"{r['final_active_pages']:>6d} {r['fold_pages']:>6d} "
-              f"{'✓' if r['audit_recoverable'] else '✗':>5s}")
+              f"{'[是]' if r['audit_recoverable'] else '[否]':>5s}")
 
     import json
     out = {"meta": {"turns": len(EVOLUTION), "zero_api": True},

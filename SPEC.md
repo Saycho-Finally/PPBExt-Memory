@@ -50,12 +50,12 @@ MemoryPage（记忆页）
   └─ supersedes: 被本页取代的页 id（折叠链）
 
 MemoryStore（页库）      JSONL append-only；页只追加不修改
-PromptComposer（组装器）  ★ 缓存友好核心
+PromptComposer（组装器）  缓存友好核心
   ├─ 确定性顺序：kind 分组固定序 → 组内按 id 排序
   ├─ 预算裁剪：按 kind 分配 token 预算（preference 优先于 lesson）
   ├─ 批量提交：变更集攒批，一次只动尾部
   └─ 前缀稳定性校验：组装结果与前次的前缀重合度 ≥ 阈值（落差报警）
-MemoryController（控制器）★ 决策外挂接口
+MemoryController（控制器）决策外挂接口
   └─ 四操作决策点（DecisionCore）：
      ADD（新事实是否入页）/ UPDATE（翻新 or 折叠）/ FOLD（失效声明）/ NOOP
      每次决策落 DecisionRecord（候选来源、判定器、依据、shift_risk）
