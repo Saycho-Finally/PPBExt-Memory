@@ -1,4 +1,4 @@
-"""Addenda-Memory 核心测试：页生命周期 / 组装确定性 / 前缀稳定性 / 折叠 / 决策审计。"""
+"""PPBExt-Memory 核心测试：页生命周期 / 组装确定性 / 前缀稳定性 / 折叠 / 决策审计。"""
 
 import os
 import random
@@ -103,7 +103,7 @@ def test_controller():
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("Addenda-Memory 核心测试")
+    print("PPBExt-Memory 核心测试")
     print("=" * 60)
     test_pages()
     test_fold()

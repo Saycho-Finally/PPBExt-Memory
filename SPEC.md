@@ -1,4 +1,4 @@
-# Addenda-Memory ｜ 立项分析与设计 v0.1（2026-10-04）
+# PPBExt-Memory ｜ 立项分析与设计 v0.1（2026-10-04）
 
 > 定位：**缓存友好的分页记忆**——把会话记忆做成"页"，页的生命周期受前缀稳定性纪律约束，
 > 所有记忆维护决策经 DecisionCore 落证据链。
@@ -37,7 +37,7 @@
 | **前缀缓存兼容** | 全部无视（Letta 的 recall 分页与 cache 纪律无关；ACE/Compaction 直接改写上下文）| **记忆页加载必须满足滞后窗纪律**：确定性顺序 + 批量提交 + 前缀稳定性校验——"记忆动一下缓存全失效"是所有人踩过但不谈的坑，三定律给定量框架 |
 | **决策可审计** | 无（记忆 ADD/UPDATE/DELETE 多数是启发式或后台 LLM 抽取，不可追问）| **记忆维护决策经 DecisionCore**：ADD/UPDATE/FOLD/NOOP 是决策点，每次落 DecisionRecord（谁、何时、依据什么改了记忆）|
 | **staleness（开放问题 1）** | 无公认解（向量库只能覆盖不能失效）| **折叠机制**：append-only 兼容的失效方案——不删旧页，追加"折叠页"声明旧页效力终止（满足纪律 + 保留审计）|
-| **成本口径** | 只算 token 量 | 补**含缓存命中价的成本**（hit/miss 分价——我们的 Addenda-Cache 已实证两价相差 50 倍）|
+| **成本口径** | 只算 token 量 | 补**含缓存命中价的成本**（hit/miss 分价——我们的 PPBExt-Cache 已实证两价相差 50 倍）|
 
 ## 三、架构设计
 
@@ -79,10 +79,10 @@ MemoryController（控制器）★ 决策外挂接口
 
 | 接口 | 方式 |
 |---|---|
-| Addenda-Cache | 组装器的确定性顺序 + 批量提交 = 缓存纪律在记忆侧的执行；前缀重合度可作为 CacheTiers 的输入 |
-| Addenda-Decide | MemoryController 的四操作决策点（verifiable: 内容门规则 / open: 重要性判断）|
-| Addenda-LM | 折叠页可作为"知识更新"信号（折叠 ≠ 遗忘，是效力转移）|
-| Addenda-Think | 记忆页的 token 预算 = budget_guard 的一个输入维度 |
+| PPBExt-Cache | 组装器的确定性顺序 + 批量提交 = 缓存纪律在记忆侧的执行；前缀重合度可作为 CacheTiers 的输入 |
+| PPBDec-Core | MemoryController 的四操作决策点（verifiable: 内容门规则 / open: 重要性判断）|
+| PPBExt-Knowledge | 折叠页可作为"知识更新"信号（折叠 ≠ 遗忘，是效力转移）|
+| PPBExt-Sample | 记忆页的 token 预算 = budget_guard 的一个输入维度 |
 
 ## 六、红线（延续）
 

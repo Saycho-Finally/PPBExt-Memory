@@ -1,4 +1,4 @@
-"""Addenda-Memory：缓存友好的分页记忆（三层记忆 x 前缀纪律 x 决策审计）。"""
+"""PPBExt-Memory：缓存友好的分页记忆（三层记忆 x 前缀纪律 x 决策审计）。"""
 
 from memorycore.pages import MemoryPage, MemoryStore, PageKind, PageLifecycle
 from memorycore.composer import PromptComposer, ComposeResult
