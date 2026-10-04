@@ -37,7 +37,7 @@
 | **前缀缓存兼容** | 全部无视（Letta 的 recall 分页与 cache 纪律无关；ACE/Compaction 直接改写上下文）| **记忆页加载必须满足滞后窗纪律**：确定性顺序 + 批量提交 + 前缀稳定性校验——"记忆动一下缓存全失效"是所有人踩过但不谈的坑，三定律给定量框架 |
 | **决策可审计** | 无（记忆 ADD/UPDATE/DELETE 多数是启发式或后台 LLM 抽取，不可追问）| **记忆维护决策经 DecisionCore**：ADD/UPDATE/FOLD/NOOP 是决策点，每次落 DecisionRecord（谁、何时、依据什么改了记忆）|
 | **staleness（开放问题 1）** | 无公认解（向量库只能覆盖不能失效）| **折叠机制**：append-only 兼容的失效方案——不删旧页，追加"折叠页"声明旧页效力终止（满足纪律 + 保留审计）|
-| **成本口径** | 只算 token 量 | 补**含缓存命中价的成本**（hit/miss 分价——我们的 PPBExt-Cache 已实证两价相差 50 倍）|
+| **成本口径** | 只算 token 量 | 补**含缓存命中价的成本**（hit/miss 分价——本项目已实证两价相差 50 倍）|
 
 ## 三、架构设计
 
@@ -55,7 +55,7 @@ PromptComposer（组装器）  缓存友好核心
   ├─ 预算裁剪：按 kind 分配 token 预算（preference 优先于 lesson）
   ├─ 批量提交：变更集攒批，一次只动尾部
   └─ 前缀稳定性校验：组装结果与前次的前缀重合度 ≥ 阈值（落差报警）
-MemoryController（控制器）决策外挂接口
+MemoryController（控制器）判定/选择接口
   └─ 四操作决策点（DecisionCore）：
      ADD（新事实是否入页）/ UPDATE（翻新 or 折叠）/ FOLD（失效声明）/ NOOP
      每次决策落 DecisionRecord（候选来源、判定器、依据、shift_risk）
@@ -79,10 +79,10 @@ MemoryController（控制器）决策外挂接口
 
 | 接口 | 方式 |
 |---|---|
-| PPBExt-Cache | 组装器的确定性顺序 + 批量提交 = 缓存纪律在记忆侧的执行；前缀重合度可作为 CacheTiers 的输入 |
-| PPBDec-Core | MemoryController 的四操作决策点（verifiable: 内容门规则 / open: 重要性判断）|
-| PPBExt-Knowledge | 折叠页可作为"知识更新"信号（折叠 ≠ 遗忘，是效力转移）|
-| PPBExt-Sample | 记忆页的 token 预算 = budget_guard 的一个输入维度 |
+| 前缀缓存 | 组装器的确定性顺序 + 批量提交 = 缓存纪律在记忆侧的执行；前缀重合度可作为能力探测的输入 |
+| 判定/选择 | MemoryController 的四操作决策点（verifiable: 内容门规则 / open: 重要性判断）|
+| 知识注入 | 折叠页可作为"知识更新"信号（折叠不等于遗忘，是效力转移）|
+| 采样预算 | 记忆页的 token 预算 = 输出预算守卫的一个输入维度 |
 
 ## 六、红线（延续）
 

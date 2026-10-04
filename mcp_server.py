@@ -1,6 +1,6 @@
 """PPBExt-Memory 的 MCP server（stdio 传输，零依赖）。
 
-把记忆外挂包装为 MCP（Model Context Protocol）工具——任何支持 MCP 的 agent
+把PPBExt-Memory包装为 MCP（Model Context Protocol）工具——任何支持 MCP 的 agent
 客户端可直接调用。暴露三个工具：
   memory_ingest  —— 写入/更新记忆（ADD/UPDATE/NOOP 自动决策）
   memory_recall  —— 组装当前有效记忆（确定性顺序 + 前缀稳定性）

@@ -1,4 +1,4 @@
-# PPBExt-Memory ｜ 补遗：缓存友好的分页记忆 · 折叠机制与三维对照实测
+# PPBExt-Memory
 
 **一句话**：把会话记忆做成"页"，页的生命周期受前缀稳定性纪律约束，所有记忆维护决策
 落证据链——并在偏好演化场景里实测了三种失效策略的**三角张力**（回答质量 / 追问可答 /
@@ -59,7 +59,7 @@ EXPERIMENT_REPORT.md  完整实验报告（离线 + LLM 侧）
 
 ## MCP server（可选形态）
 
-本外挂同时提供 **MCP（Model Context Protocol）server** 形态——任何支持 MCP 的 agent
+本项目同时提供 **MCP（Model Context Protocol）server** 形态——任何支持 MCP 的 agent
 客户端可直接把记忆作为工具调用：
 
 ```bash
