@@ -14,7 +14,10 @@ import os
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-sys.path.insert(0, os.environ.get("ADDENDA_DECIDE_ROOT", "../../addenda-decide"))
+sys.path.insert(0, os.environ.get(
+    "PPB_DECIDE_ROOT",
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..",
+                                 "PPBDec-Core"))))
 
 from memorycore import (MemoryController, MemoryPage, MemoryStore,  # noqa: E402
                         PageKind, PromptComposer)
