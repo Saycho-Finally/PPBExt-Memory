@@ -4,7 +4,7 @@ from memorycore.pages import MemoryPage, MemoryStore, PageKind, PageLifecycle
 from memorycore.composer import PromptComposer, ComposeResult
 from memorycore.controller import MemoryController, MemoryAction
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __all__ = ["MemoryPage", "MemoryStore", "PageKind", "PageLifecycle",
            "PromptComposer", "ComposeResult", "MemoryController", "MemoryAction",
            "__version__"]
