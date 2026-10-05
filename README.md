@@ -33,16 +33,27 @@
    ——它用审计换正确率
 3. **折叠 + LLM 判定是唯一三个维度都不差的方案**（1.00 / 0.67 / 0.73）
 4. **缓存代价的诚实记录**：折叠引起的组装重排会削弱字符级前缀重合（v0.1 实测 0.57）；
-   v0.2 的"原位占位"在字符级指标上无改善（0.52）——折叠点在字符级必然断裂，
-   块级收益需 64-token 块指标专门测量（已知局限）
+   v0.2 的"原位占位"在字符级指标上无改善（0.52）——折叠点在字符级必然断裂
+5. **块级命中率已可测**（v0.4）：结论 4 留下的"块级收益需专门指标测量"已补上，
+   见 `memorycore/cache_metric.py`。口径按 provider 的物理语义——
+   **不完整的尾块不入分母**（它本就不可缓存）——所以两个口径必须合看：
+
+   | 现象 | 判读 |
+   |---|---|
+   | 块级高 + 字符级低 | 损失落在不可缓存的尾部，属正常开销 |
+   | 块级骤降 | 缓存边界本身被动过（缓存杀手） |
+
+   同时报告 `partial_tail`（结构性不可缓存尾长）与 `tail_waste`（因块粒度而浪费的字符数），
+   并提供 `HitRateTracker` 做会话级汇总（均值 / 前缀被破坏次数 / 低命中轮次）。
 
 ## 仓库结构
 
 ```
-memorycore/    核心库（pages 页库+折叠 / composer 确定性组装 / controller 四操作决策）
+memorycore/    核心库（pages 页库+折叠 / composer 确定性组装 / controller 四操作决策
+               / cache_metric 块级命中率 / audit 删除审计链）
 experiments/   staleness 实验（离线四策略 + LLM 侧三维验证）
 results/       实验原始数据（两份 JSON）
-tests/         16 项测试全过
+tests/         46 项测试全过（核心 16 + 块级指标与审计链 30）
 SPEC.md        立项分析与设计（含领域查新与差异化定位）
 reports/实验报告_staleness折叠三维对照_2026-10-04.md  完整实验报告（离线 + LLM 侧）
 ```
@@ -66,8 +77,11 @@ reports/实验报告_staleness折叠三维对照_2026-10-04.md  完整实验报�
 python mcp_server.py        # stdio JSON-RPC
 ```
 
-暴露三个工具：`memory_ingest`（写入/更新，自动 ADD/UPDATE/NOOP）、`memory_recall`
-（组装有效记忆 + 前缀稳定性指标）、`memory_fold`（折叠失效，审计链保留）。
+暴露六个工具：`memory_ingest`（写入/更新，自动 ADD/UPDATE/NOOP）、`memory_recall`
+（组装有效记忆 + 前缀稳定性指标）、`memory_fold`（折叠失效，审计链保留）、
+`memory_list`（用户可见视图）、`memory_delete`（内容物理删除，仅留不含内容的事件）、
+`memory_audit`（删除审计导出：哈希链 + `chain_ok` 校验结果，`content_retained=false`
+表示审计未变相留存被删内容）。
 零依赖实现（纯 stdio JSON-RPC），冒烟测试随仓库（initialize / tools/list / tools/call）。
 
 ## 快速上手

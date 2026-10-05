@@ -1,10 +1,13 @@
 """PPBExt-Memory 的 MCP server（stdio 传输，零依赖）。
 
 把PPBExt-Memory包装为 MCP（Model Context Protocol）工具——任何支持 MCP 的 agent
-客户端可直接调用。暴露三个工具：
+客户端可直接调用。暴露六个工具：
   memory_ingest  —— 写入/更新记忆（ADD/UPDATE/NOOP 自动决策）
   memory_recall  —— 组装当前有效记忆（确定性顺序 + 前缀稳定性）
   memory_fold    —— 折叠失效（append-only 的 staleness 解）
+  memory_list    —— 用户可见视图（审阅与治理）
+  memory_delete  —— 用户删除（内容物理删除，仅留不含内容的事件）
+  memory_audit   —— 删除审计导出（哈希链，可验证记录未被改动）
 
 协议：JSON-RPC 2.0 over stdio（initialize / tools/list / tools/call）。
 运行：python mcp_server.py（stdin/stdout 与客户端通信）
@@ -18,7 +21,8 @@ import sys
 sys.path.insert(0, ".")
 
 from memorycore import (MemoryController, MemoryPage, MemoryStore,  # noqa: E402
-                        PageKind, PromptComposer)
+                        PageKind, PromptComposer, audit_report,
+                        collect_purge_events)
 
 STORE = MemoryStore()
 CTL = MemoryController(STORE)
@@ -88,6 +92,19 @@ TOOLS = [
             "required": ["page_id"],
         },
     },
+    {
+        "name": "memory_audit",
+        "description": "导出删除审计（可验证）：不含内容的删除事件 + 哈希链校验。"
+                       "chain_ok 说明记录是否被改动过；content_retained=false "
+                       "说明审计未变相留存被删内容。chain_ok 基于全量事件计算，"
+                       "events 只列出末尾 limit 条",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "limit": {"type": "integer", "default": 50},
+            },
+        },
+    },
 ]
 
 
@@ -121,6 +138,14 @@ def _call_tool(name: str, args: dict) -> dict:
     if name == "memory_delete":
         out = STORE.purge(args["page_id"], reason=args.get("reason", "user_requested"))
         return out
+    if name == "memory_audit":
+        events = collect_purge_events(STORE.pages)
+        rep = audit_report(events)          # 链校验基于全量事件
+        limit = int(args.get("limit", 50))
+        if limit > 0:
+            rep["events"] = rep["events"][-limit:]
+            rep["events_shown"] = len(rep["events"])
+        return rep
     raise ValueError(f"unknown tool: {name}")
 
 
