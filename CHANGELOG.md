@@ -9,6 +9,9 @@
 
 ### Fixed
 
+- **MCP stdio 分帧不兼容规范客户端**（2026-10-07 复核确认）：服务原先只认 NDJSON，
+  而 MCP 的 stdio 传输用 LSP 式 `Content-Length: N` 头；规范客户端会被静默跳过
+  从而握手挂住（与协议版本无关）。现已同时支持两种分帧并按请求分帧回复
 - **`MemoryStore.fold_chain()` 完全失效**（2026-10-07 外部评审触发，已复核确认）：
   旧实现的 `next((p.supersedes ...))` 取到的值恒等于 `cur`，函数只会返回输入 id 的
   一到两份拷贝（实测 `fold_chain(p2)` → `[p2, p2]`），且循环体内有
