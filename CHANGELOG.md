@@ -7,6 +7,17 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- **`MemoryStore.fold_chain()` 完全失效**（2026-10-07 外部评审触发，已复核确认）：
+  旧实现的 `next((p.supersedes ...))` 取到的值恒等于 `cur`，函数只会返回输入 id 的
+  一到两份拷贝（实测 `fold_chain(p2)` → `[p2, p2]`），且循环体内有
+  `for p in self.pages: pass` 死代码与无条件 break。已重写为双向展开的链
+  （从旧到新，含成环保护），并补 `tests/test_fold_chain.py`（8 项）
+- README 正文把 `fold_char` 的 0.50 误标为 naive 的分数（表格本身无误）——
+  已更正，并把"fold_char 折叠零触发（`fold_pages=0`）却比 naive 低 0.25"这个
+  **未解释的异常**如实标出（此前被含糊表述为"退化为 naive"）
+
 ### Added
 
 - `reports/外部对照_查新_2026-10-06.md`：MemMA 与 Dependency-Guided Rollback Repair

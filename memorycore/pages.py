@@ -107,21 +107,50 @@ class MemoryStore:
                 "content_hash": content_hash, "event_page": event.page_id}
 
     def fold_chain(self, page_id: str) -> list[str]:
-        """追一条页的折叠链（它取代了谁、又被谁取代）。"""
-        chain = [page_id]
+        """追一条页所在的折叠链，按**从旧到新**返回 id 列表。
+
+        链的语义：`supersedes` 指向被本页取代的旧页，因此
+        「谁取代了 X」= 找 `supersedes == X` 的页。
+        以 page_id 为锚向两侧展开：向前回溯旧页，向后前进到最新页。
+
+        修正记录（2026-10-07）：旧实现里 `next((p.supersedes for p in self.pages
+        if p.supersedes == cur))` 取到的值恒等于 `cur`，因此函数只会返回
+        输入 id 的一到两份拷贝，从不返回真实链；且循环体内有 `for p in
+        self.pages: pass` 死代码与无条件 `break`。现已重写并补测试。
+        """
+        by_id = {p.page_id: p for p in self.pages}
+        # 新页索引：被取代的旧页 id → 取代它的新页 id（先到先得，保持确定性）
+        newer: dict[str, str] = {}
+        for p in self.pages:
+            if p.supersedes:
+                newer.setdefault(p.supersedes, p.page_id)
+
+        seen = {page_id}
+
+        # 向前：回溯被本页取代的旧页
+        older: list[str] = []
         cur = page_id
         while True:
-            nxt = next((p.supersedes for p in self.pages
-                        if p.supersedes == cur), None)
-            if not nxt:
+            pg = by_id.get(cur)
+            nxt = pg.supersedes if pg else None
+            if not nxt or nxt in seen:
                 break
-            chain.append(nxt)
+            older.append(nxt)
+            seen.add(nxt)
             cur = nxt
-            # 反向：本页取代的旧页
-            for p in self.pages:
-                pass
-            break
-        return chain
+
+        # 向后：前进到取代本页的新页
+        newer_chain: list[str] = []
+        cur = page_id
+        while True:
+            nxt = newer.get(cur)
+            if not nxt or nxt in seen:
+                break
+            newer_chain.append(nxt)
+            seen.add(nxt)
+            cur = nxt
+
+        return list(reversed(older)) + [page_id] + newer_chain
 
     def stats(self) -> dict:
         active = self.active_pages()
