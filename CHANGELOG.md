@@ -7,6 +7,16 @@
 
 ## [Unreleased]
 
+### Added
+
+- `reports/外部对照_查新_2026-10-06.md`：MemMA 与 Dependency-Guided Rollback Repair
+  的核实对照（M1/M2），及记忆安全工程实践的定位修正（M5）。
+
+### Changed
+
+- README 已知局限补两条诚实声明：删除审计链与记忆库同存储（不构成对抗性完整性）；
+  "折叠即取代"概念已有工程先例，本仓库增量在三维代价实测与前缀稳定性处理
+
 ## [0.4.0] - 2026-10-05
 
 ### Added
